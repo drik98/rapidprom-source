@@ -98,7 +98,7 @@ dependencies {
 	compile "org.rapidprom:GuideTreeMiner:6.5.18"
 	compile "org.rapidprom:HeuristicsMiner:6.5.49"
 	compile "org.rapidprom:HybridILPMiner:6.7.144"
-	compile "org.rapidprom:InductiveMiner:6.7.297"
+	compile "org.rapidprom:InductiveMiner:6.8.408"
 	compile "org.rapidprom:InductiveVisualMiner:6.7.413"
 	compile "org.rapidprom:Log:6.7.293"
 	compile "org.rapidprom:LogDialog:6.5.42"
