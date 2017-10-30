@@ -214,7 +214,12 @@
   	<help>LONGER HELP</help>
   	<key>sequence_filter</key>
   </operator>
-  
+    <operator> 
+  	<name>Repair Log</name>
+  	<synopsis>This operator is helpful to separate outliers from the event log based on conditional behavioural probabilities</synopsis>
+  	<help>LONGER HELP</help>
+  	<key>repair_log</key>
+  </operator>
   
    <operator>
         <name>Alpha Miner (Petri Net)</name>

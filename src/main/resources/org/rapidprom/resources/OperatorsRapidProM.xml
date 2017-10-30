@@ -182,6 +182,7 @@
                 <class>org.rapidprom.operators.filtering.FilterOutInfrequentBehaviorLogAutomatonOperatorImpl</class>
                 <icon>funnel.png</icon>
             </operator>
+			repair_log
             <operator>
             	<key>matrix_filter</key>
             	<class>org.rapidprom.operators.filtering.MatrixFilterOperatorImpl</class>
@@ -190,6 +191,11 @@
             <operator>
             	<key>sequence_filter</key>
             	<class>org.rapidprom.operators.filtering.SequenceFilterOperatorImpl</class>
+            	<icon>funnel.png</icon>
+            </operator>
+			<operator>
+            	<key>repair_log</key>
+            	<class>org.rapidprom.operators.filtering.RepairLogOperatorImpl</class>
             	<icon>funnel.png</icon>
             </operator>
         </group>
