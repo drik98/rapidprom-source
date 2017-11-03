@@ -194,6 +194,11 @@
             	<icon>funnel.png</icon>
             </operator>
 			<operator>
+            	<key>variant_filter</key>
+            	<class>org.rapidprom.operators.filtering.VariantFilterOperatorImpl</class>
+            	<icon>funnel.png</icon>
+            </operator>
+			<operator>
             	<key>repair_log</key>
             	<class>org.rapidprom.operators.filtering.RepairLogOperatorImpl</class>
             	<icon>funnel.png</icon>

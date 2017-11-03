@@ -214,6 +214,12 @@
   	<help>LONGER HELP</help>
   	<key>sequence_filter</key>
   </operator>
+  <operator> 
+  	<name>Variant Filter</name>
+  	<synopsis>This operator is helpful to keep frequent variants</synopsis>
+  	<help>LONGER HELP</help>
+  	<key>variant_filter</key>
+  </operator>
     <operator> 
   	<name>Repair Log</name>
   	<synopsis>This operator is helpful to separate outliers from the event log based on conditional behavioural probabilities</synopsis>

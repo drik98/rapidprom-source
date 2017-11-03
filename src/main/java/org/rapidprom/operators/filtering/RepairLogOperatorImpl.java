@@ -14,6 +14,7 @@ import org.processmining.logfiltering.parameters.FilterSelection;
 import org.processmining.logfiltering.parameters.MatrixFilterParameter;
 import org.processmining.logfiltering.parameters.ProbabilityType;
 import org.processmining.logfiltering.plugins.MatrixFilterPlugin;
+import org.processmining.logfiltering.plugins.RepairLog;
 import org.rapidprom.external.connectors.prom.RapidProMGlobalContext;
 import org.rapidprom.ioobjects.XLogIOObject;
 import org.rapidprom.operators.filtering.abstr.AbstractFilteringOperator;
@@ -25,7 +26,7 @@ import com.rapidminer.parameter.ParameterTypeCategory;
 import com.rapidminer.parameter.ParameterTypeDouble;
 import com.rapidminer.parameter.ParameterTypeInt;
 
-public class MatrixFilterOperatorImpl extends AbstractFilteringOperator {
+public class RepairLogOperatorImpl extends AbstractFilteringOperator {
 
 	private static final String PARAMETER_KEY_FILTER_THRESHOLD = "Threshold";
 	private static final String PARAMETER_DESC_FILTER_THRESHOLD = "Set the Repairing threshold which is used for Repairing";
@@ -52,7 +53,7 @@ public class MatrixFilterOperatorImpl extends AbstractFilteringOperator {
 //	private static final String PARAMETER_DESC_Selection_Method = "Do you want to Remove or Keeping the Outlires";
 //	private static final String[] Selection_OPTIONS = new String[] { FilterSelection.REMOVE.toString() ,FilterSelection.SELECT.toString() };
 //	private static final FilterSelection[] Selection_OPTIONS_List= new FilterSelection[]{ FilterSelection.REMOVE ,FilterSelection.SELECT};
-	public MatrixFilterOperatorImpl(OperatorDescription description) {
+	public RepairLogOperatorImpl(OperatorDescription description) {
 		super(description);
 	}
 
