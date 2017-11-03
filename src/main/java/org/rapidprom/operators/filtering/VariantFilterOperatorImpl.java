@@ -8,6 +8,7 @@ import org.deckfour.xes.model.XLog;
 import org.jbpt.petri.unfolding.order.AdequateOrderType;
 import org.processmining.framework.plugin.PluginContext;
 import org.processmining.hybridilpminer.parameters.LPFilterType;
+import org.processmining.logfiltering.algorithms.VariantFilterImp;
 import org.processmining.logfiltering.parameters.AdjustingType;
 import org.processmining.logfiltering.parameters.FilterLevel;
 import org.processmining.logfiltering.parameters.FilterSelection;
@@ -25,7 +26,7 @@ import com.rapidminer.parameter.ParameterTypeCategory;
 import com.rapidminer.parameter.ParameterTypeDouble;
 import com.rapidminer.parameter.ParameterTypeInt;
 
-public class MatrixFilterOperatorImpl extends AbstractFilteringOperator {
+public class VariantFilterOperatorImpl extends AbstractFilteringOperator {
 
 //	private static final String PARAMETER_KEY_FILTER_THRESHOLD = "Threshold";
 //	private static final String PARAMETER_DESC_FILTER_THRESHOLD = "Set the filtering threshold which is used for outlier detection";
@@ -52,7 +53,7 @@ public class MatrixFilterOperatorImpl extends AbstractFilteringOperator {
 //	private static final String PARAMETER_DESC_Selection_Method = "Do you want to Remove or Keeping the Outlires";
 //	private static final String[] Selection_OPTIONS = new String[] { FilterSelection.REMOVE.toString() ,FilterSelection.SELECT.toString() };
 //	private static final FilterSelection[] Selection_OPTIONS_List= new FilterSelection[]{ FilterSelection.REMOVE ,FilterSelection.SELECT};
-	public MatrixFilterOperatorImpl(OperatorDescription description) {
+	public VariantFilterOperatorImpl(OperatorDescription description) {
 		super(description);
 	}
 
@@ -70,7 +71,7 @@ public class MatrixFilterOperatorImpl extends AbstractFilteringOperator {
 //		parameters.setProbabilitycomutingMethod(Probability_OPTIONS_List[getParameterAsInt(PARAMETER_KEY_Probability_Method)]);
 //		parameters.setFilteringSelection(Selection_OPTIONS_List[getParameterAsInt(PARAMETER_KEY_Selection_Method)]);
 		PluginContext context = RapidProMGlobalContext.instance().getPluginContext();
-		getOutputLogPort().deliver(new XLogIOObject(VariantFilterImp.run(context, noisyLog, parameters), context));
+		getOutputLogPort().deliver(new XLogIOObject(VariantFilterImp.apply(noisyLog, parameters), context));
 	}
 
 	@Override
