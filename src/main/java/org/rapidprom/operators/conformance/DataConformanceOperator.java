@@ -195,6 +195,8 @@ public class DataConformanceOperator extends Operator {
 
 			BalancedProcessorConfiguration config = getAlignmentConfig(log, transitionMapping, dpn, initialMarking,
 					finalMarkings);
+			
+			BalancedProcessorConfiguration.autoGuessBounds(config, dpn, log);
 
 			DataConformancePlusObserverImpl observer = new DataConformancePlusObserverImpl(dpnIO.getPluginContext());
 			config.setObserver(observer);
@@ -252,7 +254,7 @@ public class DataConformanceOperator extends Operator {
 		config.setKeepControlFlowSearchSpace(getKeepControlFlowSearchSpace());
 		config.setKeepDataFlowSearchSpace(getKeepDataFlowSearchSpace());
 
-		// Don't share data structure beteen threads when running single threaded
+		// Don't share data structure between threads when running single threaded
 		if (config.getConcurrentThreads() == 1) {
 			config.setKeepDataFlowSearchSpace(false);
 			config.setKeepControlFlowSearchSpace(false);
