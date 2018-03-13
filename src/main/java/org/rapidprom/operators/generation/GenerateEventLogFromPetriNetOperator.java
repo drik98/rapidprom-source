@@ -6,10 +6,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.deckfour.xes.factory.XFactory;
-import org.deckfour.xes.factory.XFactoryBufferedImpl;
+import org.deckfour.xes.factory.XFactoryNaiveImpl;
 import org.deckfour.xes.model.XLog;
 import org.processmining.framework.plugin.PluginContext;
-import org.processmining.petrinetsimulator.algorithms.Simulator;
+import org.processmining.petrinetsimulator.algorithms.tracesimulator.petrinet.TraceSimulatorPN;
 import org.processmining.petrinetsimulator.constants.SettingsConstants;
 import org.processmining.petrinetsimulator.parameters.SimulationSettings;
 import org.rapidprom.external.connectors.prom.RapidProMGlobalContext;
@@ -95,18 +95,21 @@ public class GenerateEventLogFromPetriNetOperator extends Operator {
 
 		PetriNetIOObject pNet = input.getData(PetriNetIOObject.class);
 
-		Simulator sim;
-		XLog result = null;
-		XFactory factory = new XFactoryBufferedImpl();
+		TraceSimulatorPN sim;
+		XLog log = null;
+		XFactory factory = new XFactoryNaiveImpl();
 		try {
-			sim = new Simulator(pNet.getArtifact(), pNet.getInitialMarking(), getSettingsObject(), factory);
-			result = sim.simulate();
+			sim = new TraceSimulatorPN(pluginContext, pNet.getArtifact(), pNet.getInitialMarking(), factory, getSettingsObject());
+			
+			log = factory.createLog();
+			for(int i = 0; i < getSettingsObject().getNumberOfTraces(); i++)
+			log.add(sim.simulateTrace(System.currentTimeMillis(),i));
 		} catch (ObjectNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		output.deliver(new XLogIOObject(result, pluginContext));
+		output.deliver(new XLogIOObject(log, pluginContext));
 
 		logger.log(Level.INFO,
 				"End: generating event log from petri net (" + (System.currentTimeMillis() - time) / 1000 + " sec)");

@@ -114,6 +114,13 @@
 		</help>
 		<key>filter_high_frequency_traces</key>
 	</operator>
+	
+	<operator>
+		<name>Insert Change Pattern</name>
+		<Synopyis>Inserts a change patters (add, remove, swap) to a process tree.</Synopyis>
+		<help>Makes changes in the process model.</help>
+		<key>change_process_tree</key>
+	</operator>
 
 	<operator>
 		<name>Project Alignment on DPN</name>

@@ -10,13 +10,13 @@ import java.util.logging.Logger;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.deckfour.xes.factory.XFactory;
-import org.deckfour.xes.factory.XFactoryBufferedImpl;
+import org.deckfour.xes.factory.XFactoryNaiveImpl;
+import org.deckfour.xes.model.XLog;
 import org.processmining.framework.plugin.PluginContext;
-import org.processmining.petrinetsimulator.algorithms.ConceptDrifter;
+import org.processmining.petrinetsimulator.algorithms.driftsimulator.petrinet.DriftSimulatorPN;
 import org.processmining.petrinetsimulator.constants.SettingsConstants;
 import org.processmining.petrinetsimulator.parameters.ConceptDriftSettings;
 import org.processmining.petrinetsimulator.parameters.SimulationSettings;
-import org.processmining.xeslite.lite.factory.XFactoryLiteImpl;
 import org.rapidprom.external.connectors.prom.RapidProMGlobalContext;
 import org.rapidprom.ioobjects.PetriNetIOObject;
 import org.rapidprom.ioobjects.XLogIOObject;
@@ -180,19 +180,22 @@ public class GenerateConceptDriftOperator extends Operator {
 		PetriNetIOObject pNet_base = input1.getData(PetriNetIOObject.class);
 		PetriNetIOObject pNet_drift = input2.getData(PetriNetIOObject.class);
 
-		ConceptDrifter cd = null;
+		DriftSimulatorPN cd = null;
 		ConceptDriftSettings cds = getSettingsObject();
-		
-		XFactory factory = new XFactoryLiteImpl();
+
+		XFactory factory = new XFactoryNaiveImpl();
+		XLog log = null;
 		try {
 
-			cd = new ConceptDrifter(pNet_base.getArtifact(), pNet_base.getInitialMarking(), pNet_drift.getArtifact(),
-					pNet_drift.getInitialMarking(), cds, factory);
+			cd = new DriftSimulatorPN(pluginContext, factory, cds);
+			log = cd.simulateDrift(pNet_base.getArtifact(), pNet_base.getInitialMarking(), pNet_drift.getArtifact(),
+					pNet_drift.getInitialMarking());
+
 		} catch (ObjectNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		output.deliver(new XLogIOObject(cd.generateLogWithDrift(), pluginContext));
+		output.deliver(new XLogIOObject(log, pluginContext));
 
 		fillDriftPoints(cd.getDriftPoints(), cds.getDriftType());
 		fillSampleProbabilitiesOverTime(cd.getTimePoints());
