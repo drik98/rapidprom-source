@@ -1,4 +1,4 @@
-package org.rapidprom.operators.generation;
+package org.rapidprom.operators.conceptdrift;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -54,12 +54,9 @@ import cern.jet.random.engine.DRand;
 import cern.jet.random.engine.RandomEngine;
 import javassist.tools.rmi.ObjectNotFoundException;
 
-public class GenerateConceptDriftOperator extends Operator {
+public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 
-	public static final String PARAMETER_1_KEY = "# drifts",
-			PARAMETER_1_DESCR = "the number of drifts that will be included in the resulting event log",
-
-			PARAMETER_2_KEY = "Type of Drift",
+	public static final String PARAMETER_2_KEY = "Type of Drift",
 			PARAMETER_2_DESCR = "The types of drift than can be injected: sudden, gradual and momentary.",
 
 			PARAMETER_3_KEY = "Drift Transition Function",
@@ -111,19 +108,20 @@ public class GenerateConceptDriftOperator extends Operator {
 
 			PARAMETER_11_KEY = "max events per case",
 			PARAMETER_11_DESCR = "the maximum number of activities that will be generated in a single case (limit for models with loops)",
-			PARAMETER_12_KEY = "seed", PARAMETER_12_DESCR = "seed used for random number generation",
-			PARAMETER_13_KEY = "traceID", PARAMETER_13_DESCR = "initial Trace ID";
+			PARAMETER_12_KEY = "seed", PARAMETER_12_DESCR = "seed used for random number generation";
 
 	private InputPort input1 = getInputPorts().createPort("base petri net", PetriNetIOObject.class);
-	private InputPort input2 = getInputPorts().createPort("drift petri net", PetriNetIOObject.class);
+	private InputPort input2 = getInputPorts().createPort("first drift petri net", PetriNetIOObject.class);
+	private InputPort input3 = getInputPorts().createPort("second drift petri net", PetriNetIOObject.class);
 
 	private OutputPort output = getOutputPorts().createPort("event log");
 	private OutputPort output2 = getOutputPorts().createPort("drift points");
 	private OutputPort output3 = getOutputPorts().createPort("sampling probabilities over time");
 	private OutputPort output4 = getOutputPorts().createPort("sampling probabilities over trace ID");
 
-	public GenerateConceptDriftOperator(OperatorDescription description) {
+	public GenerateEventLogWithDoubleConceptDrift(OperatorDescription description) {
 		super(description);
+
 		getTransformer().addRule(new GenerateNewMDRule(output, XLogIOObject.class));
 
 		ExampleSetMetaData md1 = new ExampleSetMetaData();
@@ -170,7 +168,7 @@ public class GenerateConceptDriftOperator extends Operator {
 
 		getTransformer().addRule(new GenerateNewMDRule(output4, md3));
 	}
-
+	
 	public void doWork() throws OperatorException {
 		Logger logger = LogService.getRoot();
 		logger.log(Level.INFO, "Start: generating event log with concept drift");
@@ -179,7 +177,8 @@ public class GenerateConceptDriftOperator extends Operator {
 		PluginContext pluginContext = RapidProMGlobalContext.instance().getPluginContext();
 
 		PetriNetIOObject pNet_base = input1.getData(PetriNetIOObject.class);
-		PetriNetIOObject pNet_drift = input2.getData(PetriNetIOObject.class);
+		PetriNetIOObject pNet_drift1 = input2.getData(PetriNetIOObject.class);
+		PetriNetIOObject pNet_drift2 = input3.getData(PetriNetIOObject.class);
 
 		DriftSimulatorPN cd = null;
 		ConceptDriftSettings cds = getSettingsObject();
@@ -208,11 +207,9 @@ public class GenerateConceptDriftOperator extends Operator {
 		logger.log(Level.INFO, "End: generating event log with concept drift ("
 				+ (System.currentTimeMillis() - time) / 1000 + " sec)");
 	}
-
+	
 	public List<ParameterType> getParameterTypes() {
 		List<ParameterType> parameterTypes = super.getParameterTypes();
-
-		ParameterTypeInt parameter1 = new ParameterTypeInt(PARAMETER_1_KEY, PARAMETER_1_DESCR, 1, 100, 5);
 
 		ParameterTypeCategory parameter2 = new ParameterTypeCategory(PARAMETER_2_KEY, PARAMETER_2_DESCR,
 				SettingsConstants.getDrifts().toArray(new String[SettingsConstants.getDrifts().size()]), 0);
@@ -353,10 +350,6 @@ public class GenerateConceptDriftOperator extends Operator {
 		ParameterTypeInt parameter12 = new ParameterTypeInt(PARAMETER_12_KEY, PARAMETER_12_DESCR, 0, Integer.MAX_VALUE,
 				1);
 		
-		ParameterTypeInt parameter13 = new ParameterTypeInt(PARAMETER_13_KEY, PARAMETER_13_DESCR, 0, Integer.MAX_VALUE,
-				1);
-
-		parameterTypes.add(parameter1);
 		parameterTypes.add(parameter2);
 		parameterTypes.add(parameter3);
 		parameterTypes.add(parameter4);
@@ -388,7 +381,6 @@ public class GenerateConceptDriftOperator extends Operator {
 		parameterTypes.add(parameter10E);
 		parameterTypes.add(parameter11);
 		parameterTypes.add(parameter12);
-		parameterTypes.add(parameter13);
 
 		return parameterTypes;
 	}
@@ -492,10 +484,10 @@ public class GenerateConceptDriftOperator extends Operator {
 			break;
 		}
 
-		SimulationSettings simuSettings = new SimulationSettings(getParameterAsInt(PARAMETER_13_KEY), 0, getParameterAsInt(PARAMETER_11_KEY),
+		SimulationSettings simuSettings = new SimulationSettings(0, 0, getParameterAsInt(PARAMETER_11_KEY),
 				ParameterTypeDate.getParameterAsDate(PARAMETER_8_KEY, this).getTime(), tbc, tbe);
 
-		return new ConceptDriftSettings(getParameterAsInt(PARAMETER_1_KEY), ddp, dsp,
+		return new ConceptDriftSettings(2, ddp, dsp,
 				getParameterAsDouble(PARAMETER_4_KEY), getParameterAsDouble(PARAMETER_5_KEY),
 				getParameterAsString(PARAMETER_2_KEY), getParameterAsString(PARAMETER_3_KEY), simuSettings);
 	}
@@ -642,4 +634,5 @@ public class GenerateConceptDriftOperator extends Operator {
 		es = table.createExampleSet();
 		output4.deliver(es);
 	}
+
 }

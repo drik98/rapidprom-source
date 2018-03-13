@@ -208,7 +208,6 @@ public class GenerateEventLogFromPetriNetOperator extends Operator {
 
 		AbstractContinousDistribution tba = null, tbe = null;
 		RandomEngine engine = new DRand(getParameterAsInt(PARAMETER_17_KEY));
-		System.out.println("works");
 
 		switch (getParameterAsString(PARAMETER_5_KEY)) {
 		default:
