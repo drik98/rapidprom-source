@@ -34,13 +34,7 @@ repositories {
 			ivy "[module]-[revision]/ivy-[module]-[revision].xml"
 		}
 	}
-	ivy {
-		url "http://github.com/edugonza/DatabaseProcessMining-Repository/raw/master/Releases/"
-		layout "pattern", {
-			artifact "[organisation]/[module]/[revision]/[module]-[revision].[ext]"
-			ivy "[organisation]/[module]/[revision]/[module]/ivy-[revision].xml"
-		}
-	}
+	maven { url "https://jitpack.io" }
 }
 
 extensionConfig {
@@ -139,8 +133,8 @@ dependencies {
 	compile "org.rapidprom:VariantFinder:6.7.9"
 	compile "org.rapidprom:XESLite:6.7.319"
 	compile "org.rapidprom:Weka:6.7.25"
-	compile "org.processmining:OpenSLEX:0.8"
-	compile "org.processmining:DAPOQ-Lang:0.8"
+	compile "com.github.edugonza:OpenSLEX:0.9"
+	compile "com.github.edugonza:DAPOQ-Lang:0.9"
 	compile 'com.github.fommil.netlib:all:1.1.2'
 	compile 'com.googlecode.matrix-toolkits-java:mtj:1.0.3'
 }
