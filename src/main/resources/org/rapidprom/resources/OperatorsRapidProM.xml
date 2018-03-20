@@ -653,6 +653,10 @@
 			<class>org.rapidprom.operators.generation.GenerateConceptDriftOperator</class>
 		</operator>
 		<operator>
+			<key>generate_log_with_double_conceptdrift</key>
+			<class>org.rapidprom.operators.conceptdrift.GenerateEventLogWithDoubleConceptDrift</class>
+		</operator>
+		<operator>
 			<key>generate_log</key>
 			<class>org.rapidprom.operators.generation.GenerateEventLogOperator</class>
 		</operator>

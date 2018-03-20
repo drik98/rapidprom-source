@@ -993,6 +993,13 @@
 	</operator>
 
 	<operator>
+		<name>Generate Event Log With Double Concept Drift</name>
+		<synopsis>  </synopsis>
+		<help> </help>
+		<key>generate_log_with_double_conceptdrift</key>
+	</operator>
+	
+	<operator>
 		<name>Convert Newick Tree to Process Tree</name>
 		<synopsis>  </synopsis>
 		<help> </help>

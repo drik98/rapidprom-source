@@ -13,7 +13,7 @@ import org.deckfour.xes.factory.XFactory;
 import org.deckfour.xes.factory.XFactoryNaiveImpl;
 import org.deckfour.xes.model.XLog;
 import org.processmining.framework.plugin.PluginContext;
-import org.processmining.petrinetsimulator.algorithms.driftsimulator.petrinet.DriftSimulatorPN;
+import org.processmining.petrinetsimulator.algorithms.driftsimulator.petrinet.DoubleDriftSimulatorPN;
 import org.processmining.petrinetsimulator.constants.SettingsConstants;
 import org.processmining.petrinetsimulator.parameters.ConceptDriftSettings;
 import org.processmining.petrinetsimulator.parameters.SimulationSettings;
@@ -168,7 +168,7 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 
 		getTransformer().addRule(new GenerateNewMDRule(output4, md3));
 	}
-	
+
 	public void doWork() throws OperatorException {
 		Logger logger = LogService.getRoot();
 		logger.log(Level.INFO, "Start: generating event log with concept drift");
@@ -180,16 +180,16 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 		PetriNetIOObject pNet_drift1 = input2.getData(PetriNetIOObject.class);
 		PetriNetIOObject pNet_drift2 = input3.getData(PetriNetIOObject.class);
 
-		DriftSimulatorPN cd = null;
+		DoubleDriftSimulatorPN cd = null;
 		ConceptDriftSettings cds = getSettingsObject();
 
 		XFactory factory = new XFactoryNaiveImpl();
 		XLog log = null;
 		try {
 
-			cd = new DriftSimulatorPN(pluginContext, factory, cds);
-			log = cd.simulateDrift(pNet_base.getArtifact(), pNet_base.getInitialMarking(), pNet_drift.getArtifact(),
-					pNet_drift.getInitialMarking());
+			cd = new DoubleDriftSimulatorPN(pluginContext, factory, cds);
+			log = cd.simulateDrift(pNet_base.getArtifact(), pNet_base.getInitialMarking(), pNet_drift1.getArtifact(),
+					pNet_drift1.getInitialMarking(), pNet_drift2.getArtifact(), pNet_drift2.getInitialMarking());
 
 		} catch (ObjectNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -201,13 +201,10 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 		fillSampleProbabilitiesOverTime(cd.getTimePoints());
 		fillSampleProbabilitiesOverTraceID(cd.getTracePoints());
 
-		// DrawUtils.printProbabilityHistogram(cd.getTimePoints(), "Time");
-		// DrawUtils.printProbabilityHistogram(cd.getTracePoints(), "Trace ID");
-
 		logger.log(Level.INFO, "End: generating event log with concept drift ("
 				+ (System.currentTimeMillis() - time) / 1000 + " sec)");
 	}
-	
+
 	public List<ParameterType> getParameterTypes() {
 		List<ParameterType> parameterTypes = super.getParameterTypes();
 
@@ -349,7 +346,7 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 				100);
 		ParameterTypeInt parameter12 = new ParameterTypeInt(PARAMETER_12_KEY, PARAMETER_12_DESCR, 0, Integer.MAX_VALUE,
 				1);
-		
+
 		parameterTypes.add(parameter2);
 		parameterTypes.add(parameter3);
 		parameterTypes.add(parameter4);
@@ -487,9 +484,9 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 		SimulationSettings simuSettings = new SimulationSettings(0, 0, getParameterAsInt(PARAMETER_11_KEY),
 				ParameterTypeDate.getParameterAsDate(PARAMETER_8_KEY, this).getTime(), tbc, tbe);
 
-		return new ConceptDriftSettings(2, ddp, dsp,
-				getParameterAsDouble(PARAMETER_4_KEY), getParameterAsDouble(PARAMETER_5_KEY),
-				getParameterAsString(PARAMETER_2_KEY), getParameterAsString(PARAMETER_3_KEY), simuSettings);
+		return new ConceptDriftSettings(2, ddp, dsp, getParameterAsDouble(PARAMETER_4_KEY),
+				getParameterAsDouble(PARAMETER_5_KEY), getParameterAsString(PARAMETER_2_KEY),
+				getParameterAsString(PARAMETER_3_KEY), simuSettings);
 	}
 
 	private long getTimeInMiliseconds(double input, String timeUnit) {
