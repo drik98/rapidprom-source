@@ -271,11 +271,11 @@ public class MeasureDriftDetectionOperator extends Operator {
 
 	/**
 	 * This method evaluates drift in the case of gradual or momentary drifts
-	 * (non-sudden) the particularity of them is that drift is not
-	 * instantaneous, but has a start and a complete point.
+	 * (non-sudden) the particularity of them is that drift is not instantaneous,
+	 * but has a start and a complete point.
 	 * 
-	 * even drifts (0, 2, 4,...) are starts, odd drifts (1, 3, 5....) are
-	 * completes of the previous.
+	 * even drifts (0, 2, 4,...) are starts, odd drifts (1, 3, 5....) are completes
+	 * of the previous.
 	 * 
 	 * @param realDriftPoints
 	 * @param detectedDrifts
@@ -323,10 +323,13 @@ public class MeasureDriftDetectionOperator extends Operator {
 		for (long detected : unassignedDrifts)
 			for (int i = 0; i < realDrifts.size() - 1; i = i + 2)
 				// even drifts are starts, odd drifts are completes
-				if (detected >= realDrifts.get(i).getTime() && detected <= realDrifts.get(i + 1).getTime())
+				if (/*
+					 * realDrifts.get(i).doesFit(detected) || realDrifts.get(i +
+					 * 1).doesFit(detected) ||
+					 */ (detected >= realDrifts.get(i).getTime() && detected <= realDrifts.get(i + 1).getTime()))
 					inInterval++;
 
-		int FP = detectedDrifts.size() - matches.size() - inInterval;
+		int FP = detectedDrifts.size() - inInterval - matches.size();
 
 		// RMSE
 		double accum = 0;

@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,6 +21,7 @@ import org.processmining.petrinetsimulator.parameters.SimulationSettings;
 import org.rapidprom.external.connectors.prom.RapidProMGlobalContext;
 import org.rapidprom.ioobjects.PetriNetIOObject;
 import org.rapidprom.ioobjects.XLogIOObject;
+import org.xeslite.lite.factory.XFactoryLiteImpl;
 
 import com.rapidminer.example.Attribute;
 import com.rapidminer.example.ExampleSet;
@@ -183,7 +185,8 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 		DoubleDriftSimulatorPN cd = null;
 		ConceptDriftSettings cds = getSettingsObject();
 
-		XFactory factory = new XFactoryNaiveImpl();
+		//XFactory factory = new XFactoryNaiveImpl();
+		XFactory factory = new XFactoryLiteImpl();
 		XLog log = null;
 		try {
 
@@ -197,7 +200,10 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 		}
 		output.deliver(new XLogIOObject(log, pluginContext));
 
-		fillDriftPoints(cd.getDriftPoints(), cds.getDriftType());
+		Set<Date> driftPoints = new TreeSet<Date>();
+		driftPoints.addAll(cd.getDriftPoints());
+		
+		fillDriftPoints(driftPoints, cds.getDriftType());
 		fillSampleProbabilitiesOverTime(cd.getTimePoints());
 		fillSampleProbabilitiesOverTraceID(cd.getTracePoints());
 

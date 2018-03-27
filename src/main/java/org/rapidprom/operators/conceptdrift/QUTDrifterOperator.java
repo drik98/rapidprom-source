@@ -1,5 +1,6 @@
 package org.rapidprom.operators.conceptdrift;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -7,7 +8,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.processmining.variantfinder.algorithms.QUTDrifter;
+import org.apromore.prodrift.driftdetector.ControlFlowDriftDetector;
+import org.apromore.prodrift.driftdetector.ControlFlowDriftDetector_EventStream;
+import org.apromore.prodrift.driftdetector.ControlFlowDriftDetector_RunStream;
+import org.apromore.prodrift.model.ProDriftDetectionResult;
+import org.deckfour.xes.model.XLog;
+import org.rapidprom.ioobjects.XLogIOObject;
 
 import com.rapidminer.example.Attribute;
 import com.rapidminer.example.ExampleSet;
@@ -19,7 +25,6 @@ import com.rapidminer.operator.Operator;
 import com.rapidminer.operator.OperatorDescription;
 import com.rapidminer.operator.OperatorException;
 import com.rapidminer.operator.io.AbstractDataReader.AttributeColumn;
-import com.rapidminer.operator.nio.file.FileObject;
 import com.rapidminer.operator.ports.InputPort;
 import com.rapidminer.operator.ports.OutputPort;
 import com.rapidminer.operator.ports.metadata.AttributeMetaData;
@@ -28,7 +33,6 @@ import com.rapidminer.operator.ports.metadata.GenerateNewMDRule;
 import com.rapidminer.operator.ports.metadata.MDInteger;
 import com.rapidminer.parameter.ParameterType;
 import com.rapidminer.parameter.ParameterTypeCategory;
-import com.rapidminer.parameter.ParameterTypeFile;
 import com.rapidminer.tools.LogService;
 import com.rapidminer.tools.Ontology;
 
@@ -36,7 +40,9 @@ public class QUTDrifterOperator extends Operator {
 
 	public static final String PARAMETER_1_KEY = "Method:", PARAMETER_1_DESCR = "";
 
-	private InputPort input = getInputPorts().createPort("file", FileObject.class);
+	public static final String RUNS = "runs", EVENTS = "events";
+
+	private InputPort input = getInputPorts().createPort("event log", XLogIOObject.class);
 	private OutputPort output = getOutputPorts().createPort("drift points");
 
 	public QUTDrifterOperator(OperatorDescription description) {
@@ -60,8 +66,9 @@ public class QUTDrifterOperator extends Operator {
 		logger.log(Level.INFO, "Start: detecting concept drift (QUT)");
 		long time = System.currentTimeMillis();
 
-		List<Date> driftPoints = QUTDrifter.doer(input.getData(FileObject.class).getFile().getAbsolutePath(),
-				getParameterAsString(PARAMETER_1_KEY));
+		XLogIOObject log = input.getData(XLogIOObject.class);
+
+		List<Date> driftPoints = detectDrift(log.getArtifact(), getParameterAsString(PARAMETER_1_KEY));
 
 		fillDriftPoints(driftPoints);
 
@@ -73,7 +80,7 @@ public class QUTDrifterOperator extends Operator {
 		List<ParameterType> parameterTypes = super.getParameterTypes();
 
 		ParameterTypeCategory par1 = new ParameterTypeCategory(PARAMETER_1_KEY, PARAMETER_1_DESCR,
-				new String[] { QUTDrifter.RUNS, QUTDrifter.EVENTS }, 0);
+				new String[] { RUNS, EVENTS }, 0);
 		parameterTypes.add(par1);
 
 		return parameterTypes;
@@ -106,6 +113,24 @@ public class QUTDrifterOperator extends Operator {
 
 		es = table.createExampleSet();
 		output.deliver(es);
+	}
+
+	private List<Date> detectDrift(XLog log, String method) {
+
+		Object cfdd = null;
+		
+		if (EVENTS.equals(method))
+			cfdd = new ControlFlowDriftDetector_EventStream(log, 3000, true, true);
+		else
+			cfdd = new ControlFlowDriftDetector_RunStream(log, 100, true, true);
+
+		ProDriftDetectionResult drifter = ((ControlFlowDriftDetector) cfdd).ControlFlowDriftDetectorStart();
+
+		List<Date> dates = drifter.getDriftDates();
+		Collections.sort(dates);
+
+		return dates;
+
 	}
 
 }
