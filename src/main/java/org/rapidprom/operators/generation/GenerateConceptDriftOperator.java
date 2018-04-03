@@ -520,7 +520,7 @@ public class GenerateConceptDriftOperator extends Operator {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void fillDriftPoints(Set<Date> drifts, String driftType) {
+	private void fillDriftPoints(List<Date> drifts, String driftType) {
 		ExampleSet es = null;
 		MemoryExampleTable table = null;
 		List<Attribute> attributes = new LinkedList<Attribute>();

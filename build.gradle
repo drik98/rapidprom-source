@@ -121,7 +121,7 @@ dependencies {
 	compile "org.rapidprom:NoiseFiltering:0.0.1"
 	compile "org.rapidprom:OnlineConformance:6.7.115"
 	compile "org.rapidprom:PetriNets:6.7.136"
-	compile "org.rapidprom:PetriNetSimulator:6.8.33"
+	compile "org.rapidprom:PetriNetSimulator:6.8.37"
 	compile "org.rapidprom:PNetAlignmentAnalysis:6.7.91"
 	compile "org.rapidprom:PNAnalysis:6.7.128"
 	compile "org.rapidprom:PNetReplayer:6.8.164"

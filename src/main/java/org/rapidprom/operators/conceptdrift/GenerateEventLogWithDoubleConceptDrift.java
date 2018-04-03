@@ -200,8 +200,7 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 		}
 		output.deliver(new XLogIOObject(log, pluginContext));
 
-		Set<Date> driftPoints = new TreeSet<Date>();
-		driftPoints.addAll(cd.getDriftPoints());
+		List<Date> driftPoints = cd.getDriftPoints();
 		
 		fillDriftPoints(driftPoints, cds.getDriftType());
 		fillSampleProbabilitiesOverTime(cd.getTimePoints());
@@ -515,7 +514,7 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 	}
 
 	@SuppressWarnings("deprecation")
-	private void fillDriftPoints(Set<Date> drifts, String driftType) {
+	private void fillDriftPoints(List<Date> drifts, String driftType) {
 		ExampleSet es = null;
 		MemoryExampleTable table = null;
 		List<Attribute> attributes = new LinkedList<Attribute>();
