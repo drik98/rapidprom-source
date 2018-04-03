@@ -118,11 +118,21 @@ public class QUTDrifterOperator extends Operator {
 	private List<Date> detectDrift(XLog log, String method) {
 
 		Object cfdd = null;
-		
-		if (EVENTS.equals(method))
-			cfdd = new ControlFlowDriftDetector_EventStream(log, 3000, true, true);
-		else
-			cfdd = new ControlFlowDriftDetector_RunStream(log, 100, true, true);
+		boolean lineChart;
+		boolean chartPanel;
+		if (EVENTS.equals(method)) {
+			byte result = -1;
+			lineChart = false;
+			chartPanel = false;
+			float af = 0.0F;
+			float driftPoints = 0.9F;
+			cfdd = new ControlFlowDriftDetector_EventStream(log, result, lineChart, af, driftPoints, chartPanel);
+		} else {
+			short arg16 = 150;
+			lineChart = false;
+			chartPanel = false;
+			cfdd = new ControlFlowDriftDetector_RunStream(log, arg16, lineChart, chartPanel);
+		}
 
 		ProDriftDetectionResult drifter = ((ControlFlowDriftDetector) cfdd).ControlFlowDriftDetectorStart();
 

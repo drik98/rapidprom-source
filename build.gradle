@@ -140,6 +140,7 @@ dependencies {
 	compile "org.rapidprom:VariantFinder:6.8.29"
 	compile "org.rapidprom:XESLite:6.7.319"
 	compile "org.rapidprom:Weka:6.7.25"
+	compile "org.rapidprom.thirdparty.lib:prodrift:2.4.beta"
 	compile "org.processmining:OpenSLEX:0.8"
 	compile "org.processmining:DAPOQ-Lang:0.8"
 	compile 'com.github.fommil.netlib:all:1.1.2'
