@@ -122,6 +122,15 @@
 		<key>change_process_tree</key>
 	</operator>
 
+
+	
+	<operator>
+		<name>Detect Concept Drift (JC)</name>
+		<Synopyis>...</Synopyis>
+		<help>...</help>
+		<key>concept_drift_jc</key>
+	</operator>
+	
 	<operator>
 		<name>Project Alignment on DPN</name>
 		<Synopyis>Projects an aligned log on a Data Petri net.</Synopyis>

@@ -338,6 +338,11 @@
 			<icon>hardhat.png</icon>
 		</operator>
 		<operator>
+			<key>concept_drift_jc</key>
+			<class>org.rapidprom.operators.conceptdrift.JCDrifterOperator</class>
+			<icon>hardhat.png</icon>
+		</operator>
+		<operator>
 			<key>measure_concept_drift</key>
 			<class>org.rapidprom.operators.conceptdrift.MeasureDriftDetectionOperator</class>
 			<icon>hardhat.png</icon>
