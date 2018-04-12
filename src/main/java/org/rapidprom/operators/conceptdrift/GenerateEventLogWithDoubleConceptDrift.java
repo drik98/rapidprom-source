@@ -185,8 +185,8 @@ public class GenerateEventLogWithDoubleConceptDrift extends Operator {
 		DoubleDriftSimulatorPN cd = null;
 		ConceptDriftSettings cds = getSettingsObject();
 
-		//XFactory factory = new XFactoryNaiveImpl();
-		XFactory factory = new XFactoryLiteImpl();
+		XFactory factory = new XFactoryNaiveImpl();
+		//XFactory factory = new XFactoryLiteImpl();
 		XLog log = null;
 		try {
 
