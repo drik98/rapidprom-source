@@ -128,7 +128,7 @@ public class QUTDrifterOperator extends Operator {
 			float driftPoints = 0.9F;
 			cfdd = new ControlFlowDriftDetector_EventStream(log, result, lineChart, af, driftPoints, chartPanel);
 		} else {
-			short arg16 = 150;
+			short arg16 = (short) Math.min(150,(log.size()/2)-1); //crashes if window size > #traces / 2
 			lineChart = false;
 			chartPanel = false;
 			cfdd = new ControlFlowDriftDetector_RunStream(log, arg16, lineChart, chartPanel);
