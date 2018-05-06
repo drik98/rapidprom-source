@@ -119,7 +119,7 @@ public class DecisionPointAnalysisOperator extends Operator {
 			for (String point : drifts) {
 				Object[] vals = new Object[2];
 				vals[0] = driftID;
-				vals[1] = Long.parseLong(point);
+				vals[1] = Double.valueOf(point).longValue();
 
 				DataRow dataRow = factory.create(vals, attributes.toArray(new Attribute[attributes.size()]));
 				table.addDataRow(dataRow);
