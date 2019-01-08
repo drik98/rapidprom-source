@@ -99,6 +99,8 @@ dependencies {
 	compile "org.rapidprom:DataAwareCNetMiner:6.7.186"
 	compile "org.rapidprom:DataDiscovery:6.7.96"
 	compile "org.rapidprom:DataPetriNets:6.7.421"
+	compile "org.rapidprom:DeclareVisualizer:6.9.94"
+	compile "org.rapidprom:DeclareMinerVisualizer:6.9.50"
 	compile "org.rapidprom:DottedChart:6.5.17"
 	compile "org.rapidprom:EvolutionaryTreeMiner:6.8.177"
 	compile "org.rapidprom:EventStream:6.5.72"
@@ -145,6 +147,7 @@ dependencies {
 	compile "org.rapidprom.thirdparty.lib:javami:na-1"
 	compile "org.rapidprom.thirdparty.lib:javax.xml.bind:na-1"
 	compile "org.rapidprom.thirdparty.lib:jsc:na-1"
+	compile "org.rapidprom.thirdparty.lib:MINERful:na-2"
 	compile "org.processmining:OpenSLEX:0.8"
 	compile "org.processmining:DAPOQ-Lang:0.8"
 	compile 'com.github.fommil.netlib:all:1.1.2'

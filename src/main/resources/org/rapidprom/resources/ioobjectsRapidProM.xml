@@ -5,6 +5,12 @@
 		reportable="false">
 		<renderer>org.rapidprom.ioobjectrenderers.AcceptingPetriNetIOObjectRenderer</renderer>
 	</ioobject>
+	<ioobject 
+		name="Declare Model"
+		class="org.rapidprom.ioobjects.DeclareIOObject"
+		reportable="false">
+		<renderer>org.rapidprom.ioobjectrenderers.DeclareIOObjectRenderer</renderer>
+	</ioobject>
 	<ioobject
 		name="BPMN Model"
 		class="org.rapidprom.ioobjects.BPMNIOObject"

@@ -122,7 +122,19 @@
 		<key>change_process_tree</key>
 	</operator>
 
-
+	<operator>
+		<name>Declare Miner</name>
+		<Synopyis>...</Synopyis>
+		<help>...</help>
+		<key>declare_miner</key>
+	</operator>
+	
+	<operator>
+		<name>Declare Conformance Checker</name>
+		<Synopyis>...</Synopyis>
+		<help>...</help>
+		<key>boolean_declare_conformance_checker</key>
+	</operator>
 	
 	<operator>
 		<name>Detect Concept Drift (JC)</name>

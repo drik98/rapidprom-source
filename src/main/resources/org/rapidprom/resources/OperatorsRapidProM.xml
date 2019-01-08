@@ -79,6 +79,11 @@
 			<icon>checks.png</icon>
 		</operator>
 		<operator>
+			<key>boolean_declare_conformance_checker</key>
+			<class>org.rapidprom.operators.conformance.BooleanDeclareConformanceCheckerOperator</class>
+			<icon>checks.png</icon>
+		</operator>
+		<operator>
 			<key>measure_precision</key>
 			<class>org.rapidprom.operators.conformance.MeasurePrecisionAnalysisOperator</class>
 			<icon>checks.png</icon>
@@ -214,6 +219,11 @@
 		<operator>
 			<key>ilp_miner</key>
 			<class>org.rapidprom.operators.discovery.ILPMinerOperator</class>
+			<icon>hardhat.png</icon>
+		</operator>
+		<operator>
+			<key>declare_miner</key>
+			<class>org.rapidprom.operators.discovery.DeclareMinerOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
 		<operator>
