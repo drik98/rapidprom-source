@@ -148,8 +148,6 @@ dependencies {
 	compile "org.rapidprom.thirdparty.lib:javax.xml.bind:na-1"
 	compile "org.rapidprom.thirdparty.lib:jsc:na-1"
 	compile "org.rapidprom.thirdparty.lib:MINERful:na-2"
-	compile "org.processmining:OpenSLEX:0.8"
-	compile "org.processmining:DAPOQ-Lang:0.8"
 	compile 'com.github.fommil.netlib:all:1.1.2'
 	compile 'com.googlecode.matrix-toolkits-java:mtj:1.0.3'
 }

@@ -71,6 +71,15 @@
 		<name>Decomposition</name>
 	</group>    
 
+	
+	<operator>
+		<name>Calculate Number of Unique Traces</name>
+		<Synopyis>Calculates the number of unique traces in an event log.</Synopyis>
+		<help>
+		</help>
+		<key>unique_traces_calculator</key>	
+	</operator>
+		
 	<operator>
 		<name>Complexity Metrics (Petri Net)</name>
 		<Synopyis>Calculates complexity metrics for a Petri net.</Synopyis>

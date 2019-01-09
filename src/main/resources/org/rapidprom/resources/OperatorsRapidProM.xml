@@ -477,7 +477,11 @@
 			<class>org.rapidprom.operators.niek.ApplyProjectionOperator</class>
 		</operator>
 	</group>	
-	<group key="log_manipulation">		
+	<group key="log_manipulation">	
+		<operator>
+			<key>unique_traces_calculator</key>
+			<class>org.rapidprom.operators.logmanipulation.CountUniqueTracesOperator</class>
+		</operator>	
 		<operator>
 			<key>calculate_determinism</key>
 			<class>org.rapidprom.operators.niek.DeterminismCalculatorOperator</class>
@@ -631,28 +635,6 @@
 				<icon>wrench.png</icon>
 			</operator>
 		</group>
-	</group>
-	<group key="padas">
-		<operator>
-			<key>dapoq_lang_query</key>
-			<class>org.rapidprom.operators.padas.DAPOQLangQueryOperator</class>
-		</operator>
-		<operator>
-			<key>import_slex_mm</key>
-			<class>org.rapidprom.operators.padas.ImportSLEXMMOperator</class>
-		</operator>
-		<operator>
-			<key>generate_slex_mm</key>
-			<class>org.rapidprom.operators.padas.GenerateSLEXMMOperator</class>
-		</operator>
-		<operator>
-			<key>padas_split_log</key>
-			<class>org.rapidprom.operators.padas.PADASLogSplitterOperator</class>
-		</operator>
-		<operator>
-			<key>dapoql_result_to_exampleset</key>
-			<class>org.rapidprom.operators.padas.SLEXMMSubSetToExampleSetConversionOperator</class>
-		</operator>
 	</group>
 	<group key="generation">
 		<operator>
