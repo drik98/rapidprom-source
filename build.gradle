@@ -110,7 +110,7 @@ dependencies {
 	compile "org.rapidprom:InductiveMiner:6.7.381"
 	compile "org.rapidprom:InductiveVisualMiner:6.7.413"
 	compile "org.rapidprom:LocalProcessModelDiscovery:6.7.86"
-	compile "org.rapidprom:Log:6.7.329"
+	compile "org.rapidprom:Log:6.9.380"
 	compile "org.rapidprom:LogDialog:6.5.42"
 	compile "org.rapidprom:LogEnhancement:6.7.354"
 	compile "org.rapidprom:LogFiltering:6.8.31"
