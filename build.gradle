@@ -106,7 +106,7 @@ dependencies {
 	compile "org.rapidprom:Fuzzy:6.5.33"
 	compile "org.rapidprom:GraphViz:6.9.256"
 	compile "org.rapidprom:GuideTreeMiner:6.5.18"
-	compile "org.rapidprom:HeuristicsMiner:6.5.49"
+	compile "org.rapidprom:HeuristicsMiner:6.9.75"
 	compile "org.rapidprom:HybridILPMiner:6.7.144"
 	compile "org.rapidprom:InductiveMiner:6.9.503"
 	compile "org.rapidprom:InductiveMinerDeprecated:6.9.61"
