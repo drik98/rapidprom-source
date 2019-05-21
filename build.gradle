@@ -97,10 +97,10 @@ dependencies {
 	compile "org.rapidprom:DataAwareReplayer:6.7.692"
 	compile "org.rapidprom:DataAwareCNetMiner:6.7.186"
 	compile "org.rapidprom:DataDiscovery:6.7.96"
-	compile "org.rapidprom:DataPetriNets:6.7.435"
+	compile "org.rapidprom:DataPetriNets:6.9.465"
 	compile "org.rapidprom:DirectlyFollowsModelMiner:6.9.20"
 	compile "org.rapidprom:DottedChart:6.5.17"
-	compile "org.rapidprom:EvolutionaryTreeMiner:6.7.154"
+	compile "org.rapidprom:EvolutionaryTreeMiner:6.9.180"
 	compile "org.rapidprom:EventStream:6.5.72"
 	compile "org.rapidprom:FeaturePrediction:6.5.61"
 	compile "org.rapidprom:Fuzzy:6.5.33"
@@ -111,7 +111,7 @@ dependencies {
 	compile "org.rapidprom:InductiveMiner:6.9.503"
 	compile "org.rapidprom:InductiveMinerDeprecated:6.9.61"
 	compile "org.rapidprom:InductiveVisualMiner:6.9.622"
-	compile "org.rapidprom:LocalProcessModelDiscovery:6.7.86"
+	compile "org.rapidprom:LocalProcessModelDiscovery-6.9.141"
 	compile "org.rapidprom:Log:6.9.380"
 	compile "org.rapidprom:LogDialog:6.5.42"
 	compile "org.rapidprom:LogEnhancement:6.7.354"
@@ -141,7 +141,7 @@ dependencies {
 	compile "org.rapidprom:Woflan:6.7.59"
 	compile "org.rapidprom:VariantFinder:6.7.9"
 	compile "org.rapidprom:XESLite:6.7.333"
-	compile "org.rapidprom:Weka:6.7.25"
+	compile "org.rapidprom:Weka:6.9.28"
 	compile 'com.github.fommil.netlib:all:1.1.2'
 	compile 'com.googlecode.matrix-toolkits-java:mtj:1.0.3'
 }
