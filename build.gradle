@@ -94,7 +94,7 @@ dependencies {
 	compile "org.rapidprom:BPMNConversions:6.5.48"
 	compile "org.rapidprom:CPNet:6.5.84"
 	compile "org.rapidprom:DataAwareExplorer:6.7.409"
-	compile "org.rapidprom:DataAwareReplayer:6.7.692"
+	compile "org.rapidprom:DataAwareReplayer:6.9.722"
 	compile "org.rapidprom:DataAwareCNetMiner:6.7.186"
 	compile "org.rapidprom:DataDiscovery:6.7.96"
 	compile "org.rapidprom:DataPetriNets:6.9.465"
