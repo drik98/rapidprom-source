@@ -111,7 +111,7 @@ dependencies {
 	compile "org.rapidprom:InductiveMiner:6.9.503"
 	compile "org.rapidprom:InductiveMinerDeprecated:6.9.61"
 	compile "org.rapidprom:InductiveVisualMiner:6.9.622"
-	compile "org.rapidprom:LocalProcessModelDiscovery-6.9.141"
+	compile "org.rapidprom:LocalProcessModelDiscovery:6.9.141"
 	compile "org.rapidprom:Log:6.9.380"
 	compile "org.rapidprom:LogDialog:6.5.42"
 	compile "org.rapidprom:LogEnhancement:6.7.354"
