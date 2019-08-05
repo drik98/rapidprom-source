@@ -36,11 +36,13 @@
 			<class>org.rapidprom.operators.analysis.AnimateLogInFuzzyModelAnalysisOperator</class>
 			<icon>magnifying_glass.png</icon>
 		</operator>
+		 
 		<operator>
 			<key>repair_model</key>
 			<class>org.rapidprom.operators.analysis.RepairModelOperator</class>
 			<icon>magnifying_glass.png</icon>
 		</operator>
+		
 		<operator>
 			<key>reduce_silent_transitions</key>
 			<class>org.rapidprom.operators.analysis.ReduceSilentTransitionsOperator</class>
@@ -61,11 +63,13 @@
 			<class>org.rapidprom.operators.analysis.InductiveVisualMinerOperator</class>
 			<icon>magnifying_glass.png</icon>
 		</operator>
+		 
 		<operator>
 			<key>project_alignment_on_dpn</key>
 			<class>org.rapidprom.operators.analysis.ProjectAlignedLogOnDPNOperator</class>
 			<icon>magnifying_glass.png</icon>
 		</operator>
+		
 	</group>
 	<group key="conformance">
 		<operator>
@@ -98,23 +102,30 @@
 			<class>org.rapidprom.operators.conformance.CreateTransEvMappingOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+	  
 		<operator>
 			<key>data_conformance</key>
 			<class>org.rapidprom.operators.conformance.DataConformanceOperator</class>
 			<icon>checks.png</icon>
 		</operator>
+		
 		<!-- operator>
 			<key>ne_precision</key>
 			<class>org.rapidprom.operators.conformance.NEPrecisionOperator</class>
+			</operator--> 
+		<operator>
 			<key>incremental_prefix_alignments</key>
 			<class>org.rapidprom.operators.conformance.IncrementalAlignmentOperator</class>
 			<icon>checks.png</icon>
-		</operator -->
+		</operator> 
+		<!--  
 		<operator>
 			<key>incremental_prefix_alignments_prefix_aware</key>
 			<class>org.rapidprom.operators.conformance.IncrementalPrefixClosureAwareAlignmentOperatorImpl</class>
 			<icon>checks.png</icon>
 		</operator>
+		-->
+		
 	</group>
 	<group key="conversion">
 		<operator>
@@ -122,11 +133,14 @@
 			<class>org.rapidprom.operators.decomposition.PetriNetToRPSTOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		  
 		<operator>
 			<key>extract_petrinets_from_lpm</key>
 			<class>org.rapidprom.operators.conversion.ExtractLocalProcessModelsFromRankingOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		
+		  
 		<operator>
 			<key>filter_lpms_for_diversity</key>
 			<class>org.rapidprom.operators.conversion.FilterLocalProcessModelRankingForDiversityOperator</class>
@@ -137,6 +151,7 @@
 			<class>org.rapidprom.operators.conversion.RerankLocalProcessModelRankingForDiversityOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		
 		<operator>
 			<key>convert_petrinet_to_bpmn</key>
 			<class>org.rapidprom.operators.conversion.PetriNetToBpmnConversionOperator</class>
@@ -147,11 +162,13 @@
 			<class>org.rapidprom.operators.conversion.PetriNetToDataPetriNetConversionOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		  
 		<operator>
 			<key>transition_system_to_petrinet</key>
 			<class>org.rapidprom.operators.conversion.TransitionSystemtoPetriNetConversionOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		
 		<operator>
 			<key>construct_reachability_graph_of_a_petri_net</key>
 			<class>org.rapidprom.operators.conversion.PetriNetToReachabilityGraphConversionOperator</class>
@@ -162,11 +179,13 @@
 			<class>org.rapidprom.operators.conversion.XLogToExampleSetConversionOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		 
 		<operator>
 			<key>exampleset_to_xlog</key>
 			<class>org.rapidprom.operators.conversion.ExampleSetToXLogConversionOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		
 		<operator>
 			<key>convert_heuristics_net_into_petri_net</key>
 			<class>org.rapidprom.operators.conversion.HeuristicNetToPetriNetConversionOperator</class>
@@ -182,11 +201,14 @@
 			<class>org.rapidprom.operators.conversion.ProcessTreeToPetriNetConversionOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		  
 		<operator>
 			<key>convert_datapetrinet_to_petrinet</key>
 			<class>org.rapidprom.operators.conversion.DataPetriNetToPetriNetConversionOperator</class>
 			<icon>objects_transform.png</icon>
 		</operator>
+		
+		
 	</group>
 	<group key="decomposition">
 		<operator>
@@ -201,6 +223,11 @@
 		</operator>
 	</group> 
 	<group key="discovery">
+	    <operator>
+			<key>event_classifier</key>
+			<class>org.rapidprom.operators.discovery.ExtractionClassifierOperator</class>
+			<icon>hardhat.png</icon>
+		</operator>
 		<operator>
 			<key>alpha_miner</key>
 			<class>org.rapidprom.operators.discovery.AlphaMinerOperator</class>
@@ -216,21 +243,31 @@
 			<class>org.rapidprom.operators.discovery.ILPMinerOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
+		
 		<operator>
 			<key>etm_miner</key>
 			<class>org.rapidprom.operators.discovery.ETMdMinerOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
+		<!--  
 		<operator>
 			<key>heuristics_miner</key>
 			<class>org.rapidprom.operators.discovery.HeuristicsMinerOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
+		-->
 		<operator>
 			<key>dataaware_heuristic_miner</key>
 			<class>org.rapidprom.operators.discovery.DataAwareHeuristicMinerOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
+		
+		<operator>
+			<key>heuristic_miner_cnet</key>
+			<class>org.rapidprom.operators.discovery.HeuristicMinerCNetOperator</class>
+			<icon>hardhat.png</icon>
+		</operator>
+		
 		<operator>
 			<key>mine_petri_net_with_inductive_miner</key>
 			<class>org.rapidprom.operators.discovery.InductiveMinerPNOperator</class>
@@ -256,11 +293,14 @@
 			<class>org.rapidprom.operators.discovery.FuzzyMinerOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
+		  
 		<operator>
 			<key>mine_lpms</key>
 			<class>org.rapidprom.operators.discovery.LocalProcessModelDiscoveryOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
+		 
+		
 	</group>
 	<group key="export">
 		<operator>
@@ -268,6 +308,11 @@
 			<class>org.rapidprom.operators.io.ExportPetriNetOperator</class>
 			<icon>inbox_out.png</icon>
 		</operator>
+		<operator>
+			<key>export_process_tree</key>
+			<class>org.rapidprom.operators.io.ExportProcessTreeOperator</class>
+			<icon>inbox_out.png</icon>
+		</operator>		
 		<operator>
 			<key>export_data_petri_net</key>
 			<class>org.rapidprom.operators.io.ExportDataPetriNetOperator</class>
@@ -327,11 +372,13 @@
 			<class>org.rapidprom.operators.conceptdrift.DecisionPointAnalysisOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
+		  
 		<operator>
 			<key>concept_drift_qut</key>
 			<class>org.rapidprom.operators.conceptdrift.QUTDrifterOperator</class>
 			<icon>hardhat.png</icon>
 		</operator>
+		
 		<operator>
 			<key>measure_concept_drift</key>
 			<class>org.rapidprom.operators.conceptdrift.MeasureDriftDetectionOperator</class>
@@ -370,6 +417,11 @@
 			<icon>inbox_into.png</icon>
 		</operator>
 		<operator>
+			<key>import_process_tree</key>
+			<class>org.rapidprom.operators.io.ImportProcessTreeOperator</class>
+			<icon>inbox_into.png</icon>
+		</operator>
+		<operator>
 			<key>import_data_petri_net</key>
 			<class>org.rapidprom.operators.io.ImportDataPetriNetOperator</class>
 			<icon>inbox_into.png</icon>
@@ -393,15 +445,18 @@
 		<operator>
 			<key>convert_abstraction_model_to_dpn</key>
 			<class>org.rapidprom.operators.abstraction.ConvertAbstractionModelToDPNOperator</class>
-		</operator>        	
+		</operator>    
+		      	
 		<operator>
 			<key>abstract_based_on_pattern</key>
 			<class>org.rapidprom.operators.abstraction.AbstractLogBasedOnAbstractionModelOperator</class>
 		</operator>
+		
 		<operator>
 			<key>expand_based_on_pattern</key>
 			<class>org.rapidprom.operators.abstraction.ExpandAbstractModelOperator</class>
-		</operator>	            	            
+		</operator>	    
+		      	            
 	</group>
 	<group key="log_projections">
 		<operator>
@@ -477,11 +532,13 @@
 		<operator>
 			<key>repair_log_data_types</key>
 			<class>org.rapidprom.operators.logmanipulation.RepairLogOperator</class>
-		</operator>                 
+		</operator>    
+		            
 		<operator>
 			<key>add_elapsed_time</key>
 			<class>org.rapidprom.operators.logmanipulation.AddElapsedTimeInTraceOperator</class>
 		</operator>
+		
 		<operator>
 			<key>add_noise_log</key>
 			<class>org.rapidprom.operators.logmanipulation.AddNoiseOperator</class>
@@ -527,8 +584,11 @@
 			<class>org.rapidprom.operators.logmanipulation.MergeSubsequentEventsOperator</class>
 		</operator>		
 	</group> 
+	  
 	<group key="streams">
+	    <!--  
 		<group key="analysis">
+		      
 			<operator>
 				<key>event_stream_analysis_proj_rec_prec_apn</key>
 				<class>org.rapidprom.operators.streams.analysis.ProjRecPrecAPNStreamAnalyzerOperator</class>
@@ -537,8 +597,10 @@
 				<key>event_stream_analysis_alignments_apn</key>
 				<class>org.rapidprom.operators.streams.analysis.AlignmentAPNAnalyzerOperator</class>
 			</operator>
+			
 		</group>
 		<group key="discovery">
+		     
 			<operator>
 				<key>stream_alpha_miner_apn</key>
 				<class>org.rapidprom.operators.streams.discovery.StreamAlphaMinerAcceptingPNOperator</class>
@@ -551,6 +613,7 @@
 				<key>stream_inductive_miner_pt</key>
 				<class>org.rapidprom.operators.streams.discovery.StreamInductiveMinerProcessTreeOperator</class>
 			</operator>
+			
 		</group>
 		<group key="export">
 			<operator>
@@ -594,7 +657,9 @@
 				<class>org.rapidprom.operators.streams.util.StopXSRunnableOperator</class>
 			</operator>
 		</group>
+        -->
 		<group key="utility">
+		    <!-- 
 			<operator>
 				<key>rprom_free_memory</key>
 				<class>org.rapidprom.operators.util.RapidProMMemoryCleanUpOperator</class>
@@ -605,6 +670,7 @@
 				<class>org.rapidprom.operators.util.XLogFactorySelectionOperator</class>
 				<icon>wrench.png</icon>
 			</operator>
+			 -->
 			<operator>
 				<key>rprom_clear_threads</key>
 				<class>org.rapidprom.operators.niek.RapidProMThreadCleanUpOperator</class>
@@ -639,14 +705,17 @@
 			<key>generate_process_tree</key>
 			<class>org.rapidprom.operators.generation.GenerateNewickTreeOperator</class>
 		</operator>
+		
 		<operator>
 			<key>generate_log_from_petrinet</key>
 			<class>org.rapidprom.operators.generation.GenerateEventLogFromPetriNetOperator</class>
 		</operator>
+		
 		<operator>
 			<key>generate_log_with_conceptdrift</key>
 			<class>org.rapidprom.operators.generation.GenerateConceptDriftOperator</class>
 		</operator>
+		
 		<operator>
 			<key>generate_log</key>
 			<class>org.rapidprom.operators.generation.GenerateEventLogOperator</class>
