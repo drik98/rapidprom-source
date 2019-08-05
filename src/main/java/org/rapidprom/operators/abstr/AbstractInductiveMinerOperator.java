@@ -2,17 +2,19 @@ package org.rapidprom.operators.abstr;
 
 import java.util.List;
 
-import org.processmining.plugins.InductiveMiner.mining.MiningParameters;
-import org.processmining.plugins.InductiveMiner.mining.MiningParametersEKS;
-import org.processmining.plugins.InductiveMiner.mining.MiningParametersIM;
-import org.processmining.plugins.InductiveMiner.mining.MiningParametersIMf;
-import org.processmining.plugins.InductiveMiner.mining.MiningParametersIMflc;
+import org.processmining.plugins.inductiveminer2.mining.MiningParameters;
+import org.processmining.plugins.inductiveminer2.mining.MiningParametersAbstract;
+import org.processmining.plugins.inductiveminer2.variants.MiningParametersIM;
+import org.processmining.plugins.inductiveminer2.variants.MiningParametersIMInfrequent;
+import org.processmining.plugins.inductiveminer2.variants.MiningParametersIMLifeCycle;
 
 import com.rapidminer.operator.OperatorDescription;
+import com.rapidminer.operator.UserError;
 import com.rapidminer.parameter.ParameterType;
 import com.rapidminer.parameter.ParameterTypeCategory;
 import com.rapidminer.parameter.ParameterTypeDouble;
 import com.rapidminer.parameter.UndefinedParameterError;
+import com.rapidminer.parameter.conditions.EqualStringCondition;
 
 public abstract class AbstractInductiveMinerOperator extends AbstractLabelAwareRapidProMDiscoveryOperator {
 
@@ -20,8 +22,8 @@ public abstract class AbstractInductiveMinerOperator extends AbstractLabelAwareR
 		super(description);
 	}
 
-	private static final String PARAMETER_1_KEY = "Variation",
-			PARAMETER_1_DESCR = "The \"Inductive Miner\" variation is described in: "
+	private static final String PARAMETER_KEY_VARIATION = "Variation",
+			PARAMETER_DESCR__VARIATION = "The \"Inductive Miner\" variation is described in: "
 					+ "http://dx.doi.org/10.1007/978-3-642-38697-8_17. \nThe \"Inductive Miner"
 					+ " - Infrequent\" variation is described in: "
 					+ "http://dx.doi.org/10.1007/978-3-319-06257-0_6. \nThe \"Inductive Miner"
@@ -33,14 +35,14 @@ public abstract class AbstractInductiveMinerOperator extends AbstractLabelAwareR
 					+ "which is a relation between pairs of activities, denoting how many "
 					+ "events are in between them in any trace at minimum."
 					+ "- Life cycle variation makes use of the 'start' and 'complete' transitions in the event log.",
-			PARAMETER_2_KEY = "Noise Threshold",
-			PARAMETER_2_DESCR = "This threshold represents the percentage of infrequent (noisy) "
+			PARAMETER_KEY_NOISE_THRESHOULD = "Noise Threshold",
+			PARAMETER_DESCR_NOISE_THRESHOULD = "This threshold represents the percentage of infrequent (noisy) "
 					+ "traces that are filtered out. The remaining traces are used to discover a model. ";
 
 	private static final String IM = "Inductive Miner", //
 			IMi = "Inductive Miner - Infrequent", //
-			IMin = "Inductive Miner - Incompleteness", //
-			IMeks = "Inductive Miner - exhaustive K-successor", //
+			//IMin = "Inductive Miner - Incompleteness", //
+			//IMeks = "Inductive Miner - exhaustive K-successor", //
 			IMflc = "Inductive Miner - Life cycle";
 
 	@Override
@@ -48,35 +50,39 @@ public abstract class AbstractInductiveMinerOperator extends AbstractLabelAwareR
 
 		List<ParameterType> parameterTypes = super.getParameterTypes();
 
-		ParameterTypeCategory parameter1 = new ParameterTypeCategory(PARAMETER_1_KEY, PARAMETER_1_DESCR,
-				new String[] { IM, IMi, IMin, IMeks, IMflc }, 1);
+		ParameterTypeCategory parameter1 = new ParameterTypeCategory(PARAMETER_KEY_VARIATION, PARAMETER_DESCR__VARIATION,
+		        new String[] { IM, IMi,IMflc }, 1);
 		parameterTypes.add(parameter1);
 
-		ParameterTypeDouble parameter2 = new ParameterTypeDouble(PARAMETER_2_KEY, PARAMETER_2_DESCR, 0, 1, 0.2);
+		ParameterTypeDouble parameter2 = new ParameterTypeDouble(PARAMETER_KEY_NOISE_THRESHOULD , PARAMETER_DESCR_NOISE_THRESHOULD, 0, 1, 0.2);
+		
+		parameter2.setOptional(true);
+		parameter2.registerDependencyCondition(
+				new EqualStringCondition(this, PARAMETER_KEY_VARIATION, true, new String[] { IMi }));
 		parameterTypes.add(parameter2);
-
+		
 		return parameterTypes;
 	}
 
-	protected MiningParameters getConfiguration() {
+	protected MiningParameters getConfiguration() throws UserError {
 		MiningParameters miningParameters = null;
 		try {
-			if (getParameterAsString(PARAMETER_1_KEY).equals(IM))
+			if (getParameterAsString(PARAMETER_KEY_VARIATION).equals(IM))
 				miningParameters = new MiningParametersIM();
-			else if (getParameterAsString(PARAMETER_1_KEY).equals(IMi))
-				miningParameters = new MiningParametersIMf();
-			else if (getParameterAsString(PARAMETER_1_KEY).equals(IMin))
-				miningParameters = new MiningParametersIMf();
-			else if (getParameterAsString(PARAMETER_1_KEY).equals(IMeks))
-				miningParameters = new MiningParametersEKS();
-			else if (getParameterAsString(PARAMETER_1_KEY).equals(IMflc))
-				miningParameters = new MiningParametersIMflc();
+			else if (getParameterAsString(PARAMETER_KEY_VARIATION).equals(IMi))
+				miningParameters = new MiningParametersIMInfrequent();
+			//else if (getParameterAsString(PARAMETER_KEY_VARIATION).equals(IMin))
+			//	miningParameters = (MiningParameters) new MiningParametersIMf();
+			//else if (getParameterAsString(PARAMETER_KEY_VARIATION).equals(IMeks))
+			//	miningParameters = (MiningParameters) new MiningParametersEKS();
+			else if (getParameterAsString(PARAMETER_KEY_VARIATION).equals(IMflc))
+				miningParameters = new MiningParametersIMLifeCycle();
 			else
 				throw new IllegalArgumentException(
-						"Unknown inductive miner type " + getParameterAsString(PARAMETER_1_KEY));
+						"Unknown inductive miner type " + getParameterAsString(PARAMETER_KEY_VARIATION));
 
-			miningParameters.setNoiseThreshold((float) getParameterAsDouble(PARAMETER_2_KEY));
-			miningParameters.setClassifier(getXEventClassifier());
+			((MiningParametersAbstract) miningParameters).setNoiseThreshold((float) getParameterAsDouble(PARAMETER_KEY_NOISE_THRESHOULD ));
+			((MiningParametersAbstract) miningParameters).setClassifier(getXEventClassifier());
 		} catch (UndefinedParameterError e) {
 			e.printStackTrace();
 		}
