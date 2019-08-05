@@ -14,6 +14,7 @@ import org.rapidprom.operators.abstr.AbstractRapidProMEventLogBasedOperator;
 
 import com.rapidminer.operator.OperatorDescription;
 import com.rapidminer.operator.OperatorException;
+import com.rapidminer.operator.UserError;
 import com.rapidminer.operator.ports.OutputPort;
 import com.rapidminer.operator.ports.metadata.GenerateNewMDRule;
 import com.rapidminer.parameter.ParameterType;
@@ -103,7 +104,7 @@ public class HeuristicsMinerOperator extends AbstractRapidProMEventLogBasedOpera
 		return parameterTypes;
 	}
 
-	private HeuristicsMinerSettings getConfiguration(XLog log) {
+	private HeuristicsMinerSettings getConfiguration(XLog log) throws UserError {
 		HeuristicsMinerSettings heuristicsMinerSettings = new HeuristicsMinerSettings();
 		try {
 			heuristicsMinerSettings.setRelativeToBestThreshold(getParameterAsDouble(PARAMETER_1_KEY) / 100d);

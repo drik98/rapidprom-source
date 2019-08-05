@@ -44,6 +44,7 @@ import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.UncheckedTimeoutException;
 import com.rapidminer.operator.OperatorDescription;
 import com.rapidminer.operator.OperatorException;
+import com.rapidminer.operator.UserError;
 import com.rapidminer.operator.ports.InputPort;
 import com.rapidminer.operator.ports.OutputPort;
 import com.rapidminer.operator.ports.metadata.GenerateNewMDRule;
@@ -152,7 +153,7 @@ public class PerformanceConformanceAnalysisOperator extends AbstractRapidProMEve
 	}
 
 	private PNManifestReplayerParameter getParameterObject(PetriNetIOObject pNet, XLog log)
-			throws UndefinedParameterError {
+			throws UserError {
 		PNManifestReplayerParameter parameter = new PNManifestReplayerParameter();
 		try {
 			parameter.setGUIMode(false);
