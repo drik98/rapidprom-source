@@ -29,7 +29,7 @@ import com.rapidminer.tools.LogService;
 
 public class TransitionSystemMinerOperator extends AbstractRapidProMEventLogBasedOperator {
 
-	public static final String PARAMETER_1_KEY = "Abstraction",
+	public static final String PARAMETER_KEY_ABSTRACTION = "Abstraction",
 			PARAMETER_1_DESCR = "Defines the abstraction used to define a state: "
 					+ "sequence (order and cardinality of events matter), "
 					+ "bag / multiset (cardinality of events matter, but not order), "
@@ -82,11 +82,11 @@ public class TransitionSystemMinerOperator extends AbstractRapidProMEventLogBase
 
 		TSMinerModirInput setting = input.getModirSettings(TSDirections.BACKWARD, getXEventClassifier());
 
-		if (getParameterAsString(PARAMETER_1_KEY).equals(TSAbstractions.SET.getLabel()))
+		if (getParameterAsString(PARAMETER_KEY_ABSTRACTION).equals(TSAbstractions.SET.getLabel()))
 			setting.setAbstraction(TSAbstractions.SET);
-		else if (getParameterAsString(PARAMETER_1_KEY).equals(TSAbstractions.BAG.getLabel()))
+		else if (getParameterAsString(PARAMETER_KEY_ABSTRACTION).equals(TSAbstractions.BAG.getLabel()))
 			setting.setAbstraction(TSAbstractions.BAG);
-		else if (getParameterAsString(PARAMETER_1_KEY).equals(TSAbstractions.FIXED_LENGTH_SET.getLabel()))
+		else if (getParameterAsString(PARAMETER_KEY_ABSTRACTION).equals(TSAbstractions.FIXED_LENGTH_SET.getLabel()))
 			setting.setAbstraction(TSAbstractions.FIXED_LENGTH_SET);
 		else
 			setting.setAbstraction(TSAbstractions.SEQUENCE);
@@ -101,7 +101,7 @@ public class TransitionSystemMinerOperator extends AbstractRapidProMEventLogBase
 	public List<ParameterType> getParameterTypes() {
 		List<ParameterType> parameterTypes = super.getParameterTypes();
 
-		ParameterTypeCategory parameter1 = new ParameterTypeCategory(PARAMETER_1_KEY, PARAMETER_1_DESCR,
+		ParameterTypeCategory parameter1 = new ParameterTypeCategory(PARAMETER_KEY_ABSTRACTION, PARAMETER_1_DESCR,
 				new String[] { TSAbstractions.SET.getLabel(), TSAbstractions.BAG.getLabel(),
 						TSAbstractions.SEQUENCE.getLabel(), TSAbstractions.FIXED_LENGTH_SET.getLabel() },
 				1);
