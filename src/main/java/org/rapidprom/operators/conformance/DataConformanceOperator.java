@@ -17,10 +17,13 @@ import org.processmining.dataawarereplayer.precision.PrecisionMeasureException;
 import org.processmining.dataawarereplayer.precision.PrecisionResult;
 import org.processmining.dataawarereplayer.precision.projection.ProcessProjectionException;
 import org.processmining.datapetrinets.DataPetriNet;
+import org.processmining.datapetrinets.DataPetriNetsWithMarkings;
 import org.processmining.log.utils.XUtils;
+import org.processmining.models.graphbased.directed.petrinet.Petrinet;
 import org.processmining.models.graphbased.directed.petrinet.PetrinetGraph;
 import org.processmining.models.graphbased.directed.petrinet.elements.Transition;
 import org.processmining.models.graphbased.directed.petrinetwithdata.newImpl.DataElement;
+import org.processmining.models.graphbased.directed.petrinetwithdata.newImpl.PetriNetWithDataFactory;
 import org.processmining.models.semantics.petrinet.Marking;
 import org.processmining.plugins.balancedconformance.BalancedDataXAlignmentPlugin;
 import org.processmining.plugins.balancedconformance.config.BalancedProcessorConfiguration;
@@ -38,6 +41,7 @@ import org.processmining.xesalignmentextension.XAlignmentExtension;
 import org.processmining.xesalignmentextension.XAlignmentExtension.XAlignedLog;
 import org.rapidprom.exceptions.ExampleSetReaderException;
 import org.rapidprom.ioobjects.DataPetriNetIOObject;
+import org.rapidprom.ioobjects.PetriNetIOObject;
 import org.rapidprom.ioobjects.TransEvMappingIOObject;
 import org.rapidprom.ioobjects.XAlignedLogIOObject;
 import org.rapidprom.ioobjects.XLogIOObject;
@@ -184,13 +188,24 @@ public class DataConformanceOperator extends Operator {
 
 		XLog log = getXLog();
 		DataPetriNetIOObject dpnIO = inputModel.getData(DataPetriNetIOObject.class);
+		//PetriNetIOObject pnIO = inputModel.getData(PetriNetIOObject.class);
 
 		try {
 			TransEvClassMapping transitionMapping = getTransitionMapping();
-
+			/**
+			Petrinet pn = pnIO.getArtifact();
+			PetriNetWithDataFactory factory = new PetriNetWithDataFactory(pn, pnIO.getArtifact().getLabel());
+			DataPetriNetsWithMarkings dpn = factory.getRetValue();
+			
+			dpn.setInitialMarking(factory.convertMarking(pnIO.getInitialMarking()));
+			Marking initialMarking = dpn.getInitialMarking();
+			dpn.setFinalMarkings(new Marking[] { factory.convertMarking(pnIO.getFinalMarking()) });
+			Marking[] finalMarkings = dpn.getFinalMarkings();
+			**/
 			DataPetriNet dpn = dpnIO.getArtifact();
 
 			Marking initialMarking = dpnIO.getInitialMarking();
+			System.out.println("DCC"+initialMarking);
 			Marking[] finalMarkings = dpnIO.getFinalMarkingAsArray();
 
 			BalancedProcessorConfiguration config = getAlignmentConfig(log, transitionMapping, dpn, initialMarking,

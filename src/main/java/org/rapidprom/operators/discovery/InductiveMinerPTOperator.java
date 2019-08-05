@@ -3,9 +3,14 @@ package org.rapidprom.operators.discovery;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.processmining.framework.packages.PackageManager.Canceller;
 import org.processmining.framework.plugin.PluginContext;
-import org.processmining.plugins.InductiveMiner.mining.MiningParameters;
-import org.processmining.plugins.InductiveMiner.plugins.IMProcessTree;
+import org.processmining.plugins.inductiveminer2.mining.MiningParameters;
+import org.processmining.plugins.inductiveminer2.plugins.InductiveMinerPlugin;
+import org.processmining.processtree.ProcessTree;
+import org.processmining.plugins.InductiveMiner.efficienttree.EfficientTree2processTree;
+import org.processmining.plugins.InductiveMiner.efficienttree.EfficientTree;
+import org.processmining.plugins.InductiveMiner.efficienttree.UnknownTreeNodeException;
 import org.rapidprom.external.connectors.prom.RapidProMGlobalContext;
 import org.rapidprom.ioobjects.ProcessTreeIOObject;
 import org.rapidprom.operators.abstr.AbstractInductiveMinerOperator;
@@ -32,9 +37,23 @@ public class InductiveMinerPTOperator extends AbstractInductiveMinerOperator {
 
 		PluginContext pluginContext = RapidProMGlobalContext.instance().getPluginContext();
 		MiningParameters param = getConfiguration();
+		
+		EfficientTree effTree = null;
+		try {
+			effTree= InductiveMinerPlugin.mineTree(param.getIMLog(getXLog()), param, new Canceller() {
+				@Override
+				public boolean isCancelled() {
+					return false;
+				}
+			});
+		} catch (UnknownTreeNodeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ProcessTree procTree= EfficientTree2processTree.convert(effTree);
+		ProcessTreeIOObject result = new ProcessTreeIOObject(procTree,pluginContext);
 
-		ProcessTreeIOObject result = new ProcessTreeIOObject(IMProcessTree.mineProcessTree(getXLog(), param),
-				pluginContext);
 
 		output.deliver(result);
 		logger.log(Level.INFO, "End: inductive miner - pt (" + (System.currentTimeMillis() - time) / 1000 + " sec)");
