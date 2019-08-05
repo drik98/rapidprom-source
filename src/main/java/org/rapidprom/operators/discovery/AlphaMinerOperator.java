@@ -1,5 +1,6 @@
 package org.rapidprom.operators.discovery;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,6 +13,7 @@ import org.processmining.models.semantics.petrinet.Marking;
 import org.rapidprom.external.connectors.prom.RapidProMGlobalContext;
 import org.rapidprom.ioobjects.PetriNetIOObject;
 import org.rapidprom.operators.abstr.AbstractLabelAwareRapidProMDiscoveryOperator;
+import org.processmining.models.graphbased.directed.petrinet.elements.Place;
 
 import com.rapidminer.operator.OperatorDescription;
 import com.rapidminer.operator.OperatorException;
@@ -85,8 +87,16 @@ public class AlphaMinerOperator extends AbstractLabelAwareRapidProMDiscoveryOper
 		if (getLabel() != null && !getLabel().isEmpty()) {
 			net.getAttributeMap().put(AttributeMap.LABEL, getLabel());
 		}
-
-		PetriNetIOObject petriNetIOObject = new PetriNetIOObject(net, (Marking) result[1], null, pluginContext);
+		
+		ArrayList<Place> finalPlaces = new ArrayList<Place>();
+		for(Place p:net.getPlaces()) {
+			if(net.getOutEdges(p).size()==0) {
+				finalPlaces.add(p);	//Marking(collection of places)
+			}
+		}
+		
+		PetriNetIOObject petriNetIOObject = new PetriNetIOObject(net, (Marking) result[1], new Marking(finalPlaces), pluginContext);
+		
 
 		output.deliver(petriNetIOObject);
 
