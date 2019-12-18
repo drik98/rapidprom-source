@@ -1,6 +1,5 @@
 package org.rapidprom.operators.discovery;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -16,39 +15,28 @@ import org.processmining.dataawarecnetminer.extension.conditionaldependencies.Co
 import org.processmining.dataawarecnetminer.mining.classic.HeuristicsCausalGraphBuilder.HeuristicsConfig;
 import org.processmining.dataawarecnetminer.mining.classic.HeuristicsCausalGraphMiner;
 import org.processmining.dataawarecnetminer.mining.classic.HeuristicsCausalNetMiner;
-import org.processmining.dataawarecnetminer.mining.data.DataAwareCausalGraphBuilder;
-import org.processmining.dataawarecnetminer.model.DataRelationStorage;
 import org.processmining.dataawarecnetminer.model.DependencyAwareCausalGraph;
 import org.processmining.dataawarecnetminer.model.EventRelationStorage;
 import org.processmining.dataawarecnetminer.model.FrequencyAwareCausalNet;
 import org.processmining.dataawarecnetminer.util.DataDiscoveryUtil;
-import org.processmining.datadiscovery.DecisionTreeConfig;
 import org.processmining.datadiscovery.RuleDiscoveryException;
 import org.processmining.framework.plugin.PluginContext;
 import org.processmining.framework.plugin.Progress;
 import org.processmining.models.cnet.CausalNet;
-import org.rapidprom.exceptions.ExampleSetReaderException;
 import org.rapidprom.external.connectors.prom.RapidProMGlobalContext;
 import org.rapidprom.ioobjects.CausalNetIOObject;
 import org.rapidprom.operators.abstr.AbstractRapidProMEventLogBasedOperator;
 import org.rapidprom.operators.util.RapidProMProgress;
 
 import com.google.common.collect.ImmutableSet;
-import com.rapidminer.example.Attribute;
-import com.rapidminer.example.Example;
-import com.rapidminer.example.ExampleSet;
 import com.rapidminer.operator.OperatorDescription;
 import com.rapidminer.operator.OperatorException;
-import com.rapidminer.operator.ProcessSetupError.Severity;
 import com.rapidminer.operator.io.AbstractDataReader.AttributeColumn;
-import com.rapidminer.operator.ports.InputPort;
 import com.rapidminer.operator.ports.OutputPort;
 import com.rapidminer.operator.ports.metadata.AttributeMetaData;
 import com.rapidminer.operator.ports.metadata.ExampleSetMetaData;
 import com.rapidminer.operator.ports.metadata.GenerateNewMDRule;
 import com.rapidminer.operator.ports.metadata.MDInteger;
-import com.rapidminer.operator.ports.metadata.SimpleMetaDataError;
-import com.rapidminer.operator.ports.metadata.SimplePrecondition;
 import com.rapidminer.parameter.ParameterType;
 import com.rapidminer.parameter.ParameterTypeBoolean;
 import com.rapidminer.parameter.ParameterTypeDouble;
@@ -90,20 +78,6 @@ public class HeuristicMinerCNetOperator extends AbstractRapidProMEventLogBasedOp
 
 	private static final String ATTRIBUTE_COLUMN = "attribute";
 
-	/**private static final String PARAMETER_USE_DATA = "Activate Data-driven Discovery",
-			PARAMETER_USE_DATA_DESCR = "Activate the data-aware discovery of Causal nets as described in the CAiSE 2017 paper.",
-			PARAMETER_BOOLEAN_SPLIT = "Data: Boolean splits",
-			PARAMETER_BOOLEAN_SPLIT_DESCR = "Force binary splits in the decision tree induction.",
-			PARAMETER_CONFIDENCE_THRESHOLD = "Data: Confidence for pruning",
-			PARAMETER_CONFIDENCE_THRESHOLD_DESCR = "Pruning confidence parameter for C4.5 induction.",
-			PARAMETER_CROSSVALIDATE = "Data: Cross validation",
-			PARAMETER_CROSSVALIDATE_DESCR = "Activate 10-times 10-fold stratified cross validation to estimate the quality of data conditions.",
-			PARAMETER_MIN_PERCENTAGE_LEAF = "Data: Minimum percentage of instances",
-			PARAMETER_MIN_PERCENTAGE_LEAF_DESCR = "The minimum percentage of instances per leaf for the decision tree.",
-			PARAMETER_UNPRUNED = "Data: Unpruned tree", PARAMETER_UNPRUNED_DESCR = "",
-			PARAMETER_WEIGHTS = "Data: Use weights",
-			PARAMETER_WEIGHTS_DESCR = "Minimize memory usage by using weighted instances. Beneficial for a small set of categorical attributes.";
-    **/
 	//private InputPort inputAttributeSelection = getInputPorts().createPort("attribute selection (Example set)");
 
 	private OutputPort outputCausalNet = getOutputPorts().createPort("model (ProM Causal Net)");
@@ -127,15 +101,6 @@ public class HeuristicMinerCNetOperator extends AbstractRapidProMEventLogBasedOp
 		HeuristicsConfig heuristicConfig = getHeuristicsMinerConfig();
 
 		Set<String> selectedAttributes = ImmutableSet.<String>of();
-		/**if (inputAttributeSelection.isConnected()) {
-			try {
-				ExampleSet attributeSelection = inputAttributeSelection.getData(ExampleSet.class);
-				selectedAttributes = readSelectedAttributes(attributeSelection);
-			} catch (ExampleSetReaderException e) {
-				inputAttributeSelection
-						.addError(new SimpleMetaDataError(Severity.WARNING, inputAttributeSelection, e.getMessage()));
-			}
-		}**/
 
 		MinerContext minerContext = createMinerContext();
 		try {
@@ -184,47 +149,13 @@ public class HeuristicMinerCNetOperator extends AbstractRapidProMEventLogBasedOp
 		return minerContext;
 	}
 
-	/**
-	private Set<String> readSelectedAttributes(ExampleSet data) throws ExampleSetReaderException {
-		Attribute attributeAttr = data.getAttributes().get(ATTRIBUTE_COLUMN);
-
-		if (attributeAttr == null) {
-			throw new ExampleSetReaderException("Missing column 'attribute'!");
-		}
-
-		Set<String> attributes = new HashSet<>();
-
-		for (Example element : data) {
-			String attribute = element.getValueAsString(attributeAttr);
-
-			if (attribute == null) {
-				throw new ExampleSetReaderException("Missing attribute!");
-			} else {
-				// for specific variable / transition combination
-				attributes.add(attribute);
-			}
-		}
-		return attributes;
-	}
-**/
 	private HeuristicsCausalNetMiner.CausalNetConfig getCausalNetConfig() throws UndefinedParameterError {
 		HeuristicsCausalNetMiner.CausalNetConfig config = new HeuristicsCausalNetMiner.CausalNetConfig();
 		config.setConsiderLongDistanceRelations(getParameterAsBoolean(PARAMETER_LONG_DISTANCE));
 		config.setBindingsThreshold(getParameterAsDouble(PARAMETER_BINDINGS_THRESHOLD));
 		return config;
 	}
-/**
-	private DecisionTreeConfig getDataDiscoveryConfig() throws UndefinedParameterError {
-		DecisionTreeConfig config = new DecisionTreeConfig();
-		config.setBinarySplit(getParameterAsBoolean(PARAMETER_BOOLEAN_SPLIT));
-		config.setConfidenceTreshold((float) getParameterAsDouble(PARAMETER_CONFIDENCE_THRESHOLD));
-		config.setCrossValidate(getParameterAsBoolean(PARAMETER_CROSSVALIDATE));
-		config.setMinPercentageObjectsOnLeaf(getParameterAsDouble(PARAMETER_MIN_PERCENTAGE_LEAF));
-		config.setUnpruned(getParameterAsBoolean(PARAMETER_UNPRUNED));
-		config.setUseWeights(getParameterAsBoolean(PARAMETER_WEIGHTS));
-		return config;
-	}
-**/
+
 	private ConditionalDependencyHeuristicConfig getDataHeuristicMinerConfig() throws UndefinedParameterError {
 		ConditionalDependencyHeuristicConfig config = new ConditionalDependencyHeuristicConfig();
 		config.setAcceptedTasksConnected(getParameterAsBoolean(PARAMETER_ACCEPTED_CONNECTED));
@@ -266,17 +197,6 @@ public class HeuristicMinerCNetOperator extends AbstractRapidProMEventLogBasedOp
 		miner.setHeuristicsConfig(heuristicConfig);
 		DependencyAwareCausalGraph dependencyGraph = miner.mineCausalGraph();
 
-   /**
-		if (getParameterAsBoolean(PARAMETER_USE_DATA)) {
-			DataRelationStorage dataRelations = DataRelationStorage.Factory.createDataRelations(eventRelations,
-					attributeTypes, selectedAttributes, minerContext.getExecutor());
-
-			DataAwareCausalGraphBuilder dataBuilder = new DataAwareCausalGraphBuilder(eventRelations, dataRelations,
-					dataConfig);
-			 dependencyGraph = dataBuilder.build(minerContext,
-			 dependencyGraph);
-		}
-    **/
 		HeuristicsCausalNetMiner causalNetMiner = new HeuristicsCausalNetMiner(eventRelations);
 		causalNetMiner.setConfig(netConfig);
 		// TODO make bindings heuristic configurable
@@ -325,38 +245,6 @@ public class HeuristicMinerCNetOperator extends AbstractRapidProMEventLogBasedOp
 				PARAMETER_ACCEPTED_CONNECTED_DESCR, true);
 		parameterTypes.add(parameter8);
 
-	/**
-		ParameterTypeBoolean parameterData = new ParameterTypeBoolean(PARAMETER_USE_DATA, PARAMETER_USE_DATA_DESCR,
-				true);
-		parameterTypes.add(parameterData);
-
-		ParameterTypeDouble parameterCond = new ParameterTypeDouble(PARAMETER_CONDITION_THRESHOLD,
-				PARAMETER_CONDITION_THRESHOLD_DESCR, 0, 1, 0.5);
-		parameterTypes.add(parameterCond);
-
-		ParameterTypeDouble parameter13 = new ParameterTypeDouble(PARAMETER_MIN_PERCENTAGE_LEAF,
-				PARAMETER_MIN_PERCENTAGE_LEAF_DESCR, 0, 1, 0.1);
-		parameterTypes.add(parameter13);
-
-		ParameterTypeBoolean parameter9 = new ParameterTypeBoolean(PARAMETER_BOOLEAN_SPLIT,
-				PARAMETER_BOOLEAN_SPLIT_DESCR, false);
-		parameterTypes.add(parameter9);
-
-		ParameterTypeBoolean parameter10 = new ParameterTypeBoolean(PARAMETER_UNPRUNED, PARAMETER_UNPRUNED_DESCR, false,
-				true);
-		parameterTypes.add(parameter10);
-
-		ParameterTypeDouble parameter12 = new ParameterTypeDouble(PARAMETER_CONFIDENCE_THRESHOLD,
-				PARAMETER_CONFIDENCE_THRESHOLD_DESCR, 0, 1, 0.25, true);
-		parameterTypes.add(parameter12);
-
-		ParameterTypeBoolean parameter11 = new ParameterTypeBoolean(PARAMETER_CROSSVALIDATE,
-				PARAMETER_CROSSVALIDATE_DESCR, true);
-		parameterTypes.add(parameter11);
-
-		ParameterTypeBoolean parameter14 = new ParameterTypeBoolean(PARAMETER_WEIGHTS, PARAMETER_WEIGHTS_DESCR, true);
-		parameterTypes.add(parameter14);
-    **/
 		return parameterTypes;
 	}
 
