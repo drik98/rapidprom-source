@@ -109,7 +109,7 @@ public class AlphaMinerOperator extends AbstractLabelAwareRapidProMDiscoveryOper
 		List<ParameterType> parameterTypes = super.getParameterTypes();
 
 		ParameterTypeCategory parameter1 = new ParameterTypeCategory(PARAMETER_1_KEY, PARAMETER_1_DESCR,
-				new String[] { CLASSIC, PLUS, PLUSPLUS, SHARP }, 1);
+				new String[] { CLASSIC, PLUS, PLUSPLUS, SHARP }, 3);
 		parameterTypes.add(parameter1);
 
 		return parameterTypes;
