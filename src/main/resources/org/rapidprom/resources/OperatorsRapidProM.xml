@@ -447,10 +447,12 @@
 			<class>org.rapidprom.operators.abstraction.ConvertAbstractionModelToDPNOperator</class>
 		</operator>    
 		      	
+		<!--  
 		<operator>
 			<key>abstract_based_on_pattern</key>
 			<class>org.rapidprom.operators.abstraction.AbstractLogBasedOnAbstractionModelOperator</class>
 		</operator>
+		-->
 		
 		<operator>
 			<key>expand_based_on_pattern</key>
