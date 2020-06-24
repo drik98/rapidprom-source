@@ -53,7 +53,7 @@ extensionConfig {
      * and for customizing the license headers when initializing the project repository.
      *
      */
-    vendor = "Eindhoven University of Technology"
+    vendor = "Eindhoven University of Technology | Hendrik Schmitz WZL"
 
     /*
      * The vendor homepage which will be displayed in the extensions about box
