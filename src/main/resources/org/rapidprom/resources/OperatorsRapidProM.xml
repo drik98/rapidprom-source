@@ -307,9 +307,17 @@
             <key>ba_myownoperator</key>
             <class>org.rapidprom.operators.ba.MyOwnOperator</class>
         </operator>
-               <operator>
+        <operator>
             <key>ba_myownoperator2</key>
             <class>org.rapidprom.operators.ba.MyOwnOperator2</class>
+        </operator>
+        <operator>
+            <key>AbteilungOperator</key>
+            <class>org.rapidprom.operators.ba.AbteilungOperator</class>
+        </operator>
+        <operator>
+            <key>PetriNetConverter</key>
+            <class>org.rapidprom.operators.ba.PetriNetConverter</class>
         </operator>
     </group>
 </operators>
