@@ -53,9 +53,9 @@ public class AbteilungOperator extends Operator {
                         .get(classifierKey)
                         .toString())
                 .collect(Collectors.toSet());
-        Map<String, XAttribute> activityToAbteilung = new HashMap();
+        Map<String, XAttribute> activityToAbteilung = new HashMap<String, XAttribute>();
         for (String uniqueActivity : uniqueActivities) {
-            String abteilung = JOptionPane.showInputDialog("Abteilung für Aktivität \"" + uniqueActivity + "\" angeben.");
+            String abteilung = JOptionPane.showInputDialog("Abteilung fÃ¼r AktivitÃ¤t \"" + uniqueActivity + "\" angeben.");
             XAttributeLiteralImpl attribLit = new XAttributeLiteralImpl(ABTEILUNG_KEY,
                     abteilung);
             activityToAbteilung.put(uniqueActivity, attribLit);
