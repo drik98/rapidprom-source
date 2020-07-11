@@ -8,7 +8,7 @@ public class AixperantoProzessWriter implements AixperantoContentWriter<Prozess>
 
 	@Override
 	public String[] getFirstLine() {
-		return new String[]{"kurzbezeichnung","icon1","icon2","icon3","typ","beschreibung","abteilung","eingang","ausgang","uebergang","hilfsmittel","oee"};
+		return new String[]{"kurzbezeichnung","icon1","icon2","icon3","typ","beschreibung","abteilung","eingang","ausgang","uebergang","hilfsmittel","oee","zeit","kosten"};
 	}
 
 	@Override
