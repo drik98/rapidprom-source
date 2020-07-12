@@ -15,8 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import javax.swing.JOptionPane;
 import org.deckfour.xes.classification.XEventClassifier;
 import org.deckfour.xes.model.XAttribute;
@@ -69,25 +72,38 @@ public class OrganizationalUnitOperator extends Operator {
 
 		final String ORGANIZATIONALUNIT_KEY = getParameter(PARAMETER_ORGANIZATIONALUNIT_KEY);
 		XLogUtil.createEventLogAttribute(logger, eventLog, ORGANIZATIONALUNIT_KEY, Prozess.ORGANIZATIONALUNIT_KEY,
-				"the organizational unit.", XLogUtil.XType.DISCRETE);
+				"the organizational unit.", XLogUtil.XType.LITERAL);
 
 		MetaData md = inputXLog.getMetaData();
 
 		XEventClassifier classifier = eventLog.getClassifiers().get(0);
 		String classifierKey = classifier.name();
-		Set<String> uniqueActivities = eventLog.stream().flatMap(List::stream)
+		List<XEvent> xevents = eventLog.stream().flatMap(List::stream).collect(Collectors.toList());
+		Set<String> uniqueActivities = xevents.stream()
 				.map((XEvent event) -> ((XAttributeLiteralImpl) event.getAttributes().get(classifierKey)).getValue())
 				.collect(Collectors.toSet());
 		Map<String, XAttribute> activityToAbteilung = new HashMap<String, XAttribute>();
 		for (String uniqueActivity : uniqueActivities) {
-			String abteilung = JOptionPane
-					.showInputDialog("Please enter the organizational unit for activity \"" + uniqueActivity + "\".");
-			XAttributeLiteralImpl attribLit = new XAttributeLiteralImpl(ORGANIZATIONALUNIT_KEY, abteilung);
-			activityToAbteilung.put(uniqueActivity, attribLit);
+			Boolean organizationalUnitAlreadyExists = xevents.stream().anyMatch((XEvent evt) -> {
+				return uniqueActivity
+						.equals(((XAttributeLiteralImpl) evt.getAttributes().get(classifierKey)).getValue())
+						&& evt.getAttributes().get(ORGANIZATIONALUNIT_KEY) != null
+						&& !evt.getAttributes().get(ORGANIZATIONALUNIT_KEY).toString().isEmpty();
+			});
+			if (!organizationalUnitAlreadyExists) {
+				String abteilung = JOptionPane.showInputDialog(
+						"Please enter the organizational unit for activity \"" + uniqueActivity + "\".");
+				XAttributeLiteralImpl attribLit = new XAttributeLiteralImpl(ORGANIZATIONALUNIT_KEY, abteilung);
+				activityToAbteilung.put(uniqueActivity, attribLit);
+			} else {
+				logger.log(Level.INFO, "Organizational unit from log was used for activity \"" + uniqueActivity + "\"");
+			}
 
 		}
 
-		eventLog.stream().flatMap(List::stream).forEach((XEvent event) -> {
+		xevents.stream().filter((XEvent event) -> {
+			return event.getAttributes().get(ORGANIZATIONALUNIT_KEY) == null;
+		}).forEach((XEvent event) -> {
 			event.getAttributes().put(ORGANIZATIONALUNIT_KEY,
 					activityToAbteilung.get(event.getAttributes().get(classifierKey).toString()));
 		});
